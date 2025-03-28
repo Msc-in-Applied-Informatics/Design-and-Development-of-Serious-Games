@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Food
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Food\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=col\ row
+comment1.target=Food(int,\ int)
+comment2.params=x\ y
+comment2.target=void\ createFoodImage(int,\ int)
+comment3.params=
+comment3.target=void\ act()
+numComments=4

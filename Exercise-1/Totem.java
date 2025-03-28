@@ -1,0 +1,36 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class Totem here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Totem extends Actor
+{
+    private int spriteWidth = 288/12;
+    private int spriteHeight = 256/8;
+    private GreenfootImage spriteSheet;
+    private GreenfootImage currentSprite;
+    
+    public Totem(){
+        setSprite("/sprites/Spear-no-bg.png");
+        createSprite(9,0,80,80);
+    }
+    
+    public void setSprite(String path){
+         spriteSheet = new GreenfootImage(path);
+    }
+    
+    public void createSprite(int col, int row,int scaleX,int scaleY){
+        currentSprite = new GreenfootImage(spriteWidth,spriteHeight);
+        currentSprite.drawImage(spriteSheet,-col*spriteWidth,-row*spriteHeight);
+        setImage(currentSprite);
+        getImage().scale(scaleX,scaleY);
+    }
+    
+    public void act()
+    {
+        // Add your action code here.
+    }
+}

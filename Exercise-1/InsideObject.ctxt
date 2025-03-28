@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=InsideObject
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ InsideObject\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=width\ height\ path\ type\ theTypeTile
+comment1.target=InsideObject(int,\ int,\ java.lang.String,\ java.lang.String,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ createHome()
+numComments=4

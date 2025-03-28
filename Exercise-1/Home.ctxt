@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=Home
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Home\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=width\ height\ path\ type\ theTypeTile
+comment1.target=Home(int,\ int,\ java.lang.String,\ java.lang.String,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=col\ row
+comment3.target=void\ updateSprite(int,\ int)
+comment4.params=
+comment4.target=void\ createHome()
+numComments=5
