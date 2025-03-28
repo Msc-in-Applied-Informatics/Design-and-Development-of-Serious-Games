@@ -55,7 +55,7 @@ public class World1 extends World implements Stats
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SWIDTH, SHEIGHT, 1); 
         createMap();       
-        setPaintOrder(Weather.class,Paralize.class,Player.class,Animal.class,Door.class,Home.class,Fountain.class,Item.class,Tile.class);
+        setPaintOrder(Weather.class,Paralize.class,Player.class,Animal.class,Door.class,Home.class,Fountain.class,Animation.class,Item.class,Tile.class);
         createScoreBoard();
         Player player = new Player(life);
         List<Home> list = this.getObjects(Home.class);

@@ -53,7 +53,7 @@ public class InsideHome extends World implements Stats
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SWIDTH, SHEIGHT, 1); 
         createMap();       
-        setPaintOrder(Totem.class,Player.class,Home.class,Food.class,Tile.class);
+        setPaintOrder(Totem.class, Item.class,Animation.class,Player.class,Home.class,Food.class,Tile.class);
         List<Door> list = this.getObjects(Door.class);
         if(!list.isEmpty())
             addObject(player,list.get(0).getX(), list.get(0).getY()+60);

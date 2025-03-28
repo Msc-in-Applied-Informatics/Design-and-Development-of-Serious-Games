@@ -66,14 +66,25 @@ public class Player extends SmoothMover
             handleArrowKey("down", 0, SPEED);
         }else if(Greenfoot.isKeyDown("f")){
             World world = getWorld();
-            if (world instanceof World1) 
-            {
+            if (world instanceof World1){
                 if(foundSomething != null){
                     pickUpItem();
                 }
                 //world.addObject(new Animation(), getX()+10, getY()-25);
-            }else if(world instanceof InsideHome) {
             }
+        }else if(Greenfoot.isKeyDown("d")){
+            World world = getWorld();
+             if (world instanceof InsideHome){
+                    
+            
+                    ArrayList<ItemData> items = Inventory.getInstance().getItems();
+                    if(items.size() > 0){
+                        world.addObject(new Animation(), getX()+10, getY()-25);
+                        Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
+                        world.addObject(item, getX()+50, getY()-25);
+                   
+                    }
+             }
         }else{
             updateAnimation("stay");
         }              
@@ -82,10 +93,10 @@ public class Player extends SmoothMover
     private void pickUpItem() {
         Item item = (Item) getOneIntersectingObject(Item.class);
     
-        if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
+        //if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
             Inventory.getInstance().addItem(item);
             getWorld().removeObject(item);
-        }
+        //}
     }
 
     private void handleArrowKey(String k, int sX, int sY) {
@@ -151,7 +162,7 @@ public class Player extends SmoothMover
                     if(isTouching(Item.class)){
                         Item item = (Item) getOneObjectAtOffset(x+5- getX(),y-15 -getY() ,Item.class);
                         if(item != null){
-                            World1 world = (World1) getWorld();
+                            World world = (World) getWorld();
                             world.addObject(new Animation(), getX()+10, getY()-25);
                             foundSomething = item;
                             return false;
