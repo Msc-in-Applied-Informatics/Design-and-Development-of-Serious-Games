@@ -77,12 +77,29 @@ public class Player extends SmoothMover
              if (world instanceof InsideHome){
                     
             
-                    ArrayList<ItemData> items = Inventory.getInstance().getItems();
+                    ArrayList<ItemData> items = Inventory.getInstance().getInventory();
                     if(items.size() > 0){
-                        world.addObject(new Animation(), getX()+10, getY()-25);
+                        //world.addObject(new Animation(), getX()+10, getY()-25);
                         Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
-                        world.addObject(item, getX()+50, getY()-25);
-                   
+                        int posX = 0;
+                        int posY = 0;
+                        switch(posImageY){
+                            case 0:
+                                 posY = -25;
+                                break;
+                            case 1:
+                                 posX = +30;
+                                break;
+                            case 2:
+                                posY = 20;
+                                break;
+                            case 3:
+                                posX = -30;
+                                break;
+                                default:break;
+                        }
+                        world.addObject(item, getX()+posX, getY()+posY);
+                        Inventory.getInstance().useItem(item, getX()+posX, getY()+posY);
                     }
              }
         }else{
@@ -92,11 +109,11 @@ public class Player extends SmoothMover
     
     private void pickUpItem() {
         Item item = (Item) getOneIntersectingObject(Item.class);
-    
-        //if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
+        
+        if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
             Inventory.getInstance().addItem(item);
             getWorld().removeObject(item);
-        //}
+        }
     }
 
     private void handleArrowKey(String k, int sX, int sY) {

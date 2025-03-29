@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Write a description of class InsideHome here.
@@ -22,11 +23,13 @@ public class InsideHome extends World implements Stats
     private final static int END_WORLD_LEFT = 30;
     private final static int TILEOFFSET = TWIDTH/2;
     private final static int THEIGHT = TWIDTH;
+    private int counterItem = 0;
+    private Totem totem = new Totem();
     private final static int[][] map = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
         {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-        {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+        {0,1,1,1,1,1,1,1,1,1,20,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
         {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
         {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
         {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
@@ -53,7 +56,7 @@ public class InsideHome extends World implements Stats
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SWIDTH, SHEIGHT, 1); 
         createMap();       
-        setPaintOrder(Totem.class, Item.class,Animation.class,Player.class,Home.class,Food.class,Tile.class);
+        setPaintOrder(Totem.class,Animation.class, Item.class,Player.class,Home.class,Food.class,Tile.class);
         List<Door> list = this.getObjects(Door.class);
         if(!list.isEmpty())
             addObject(player,list.get(0).getX(), list.get(0).getY()+60);
@@ -69,12 +72,16 @@ public class InsideHome extends World implements Stats
         Food food4 = new Food(3,6);
         addObject(food4,140,60);
         
-        //Totem
-        Totem totem = new Totem();
-        addObject(totem, getWidth()/3,getHeight()/2);
+           
+       
         player.setLife();
+        
+        createItems();
+        
+        //Totem
+        createTotem(); 
+        
     }
-    
     
     private void createMap(){
         for(int row = 0; row < ROW;row++){
@@ -97,6 +104,9 @@ public class InsideHome extends World implements Stats
                     case 5:
                         tile = new Door(TWIDTH+20,THEIGHT,"door-close",".gif",5);
                         break;
+                    case 20:
+                        tile = new Tile(TWIDTH, THEIGHT, "room_floor_1", ".gif",20);
+                        break;
                     default: break;
                 }
                 if( tile != null) 
@@ -114,6 +124,19 @@ public class InsideHome extends World implements Stats
         addObject(mylife,920,50);
         PlayerImage icon = new PlayerImage();
         addObject(icon,820,50);        
+    }
+    
+    private void createItems(){
+        ArrayList<InsideItemData> items = Inventory.getInstance().getUsedItems();
+        for(InsideItemData item: items){
+            Item obj = new Item(item.getCol(),item.getRow());
+            addObject(obj,item.getPosX(),item.getPosY());   
+        }
+    }
+    
+    
+    private void createTotem(){        
+        addObject(totem, getWidth()/3,getHeight()/2);
     }
     
     @Override

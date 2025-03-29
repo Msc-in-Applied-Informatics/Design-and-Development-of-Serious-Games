@@ -12,6 +12,8 @@ public class Item extends Actor
     private int spriteHeight = 256/8;
     private GreenfootImage spriteSheet;
     private GreenfootImage currentSprite;
+    private int col;
+    private int row;
     
     private long lastFrameTime = 0;
     private int frameDelay = 800;  
@@ -19,6 +21,8 @@ public class Item extends Actor
     public Item(int col, int row){
         setSprite("/sprites/food-no-bg.png");
         createSprite(col,row,50,50);
+        this.col = col;
+        this.row = row;
     }
     
     public void setSprite(String path){
@@ -34,7 +38,7 @@ public class Item extends Actor
     
     public void act(){    }    
     
-    public int getCol() { return spriteWidth; } 
-    public int getRow() { return spriteHeight; }
+    public int getCol() { return col; } 
+    public int getRow() { return row; }
     public String getSpritePath() { return "/sprites/food-no-bg.png"; }
 }

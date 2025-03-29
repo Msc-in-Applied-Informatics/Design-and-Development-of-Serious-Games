@@ -186,20 +186,18 @@ public class World1 extends World implements Stats
     private void createItems(){
         createItemNotCollected(0, 1, 100, 30);
         createItemNotCollected(1, 1, 700, 30);
-        createItemNotCollected(2, 1, 100, 540);
+        createItemNotCollected(2, 1, 100, 200);
         createItemNotCollected(3, 1, 700, 540);
     }
     
     private void createItemNotCollected(int col, int row, int posX, int posY){
-        Inventory inventory = Inventory.getInstance();
-
-         
-        if (!inventory.hasItem(col, row)) {   
+        if (!Inventory.getInstance().hasItem(col, row)) {   
             Item item = new Item(col, row);
             addObject(item, posX, posY);
         }
-
     }
+    
+    public void lookForActiveSouls(){ };
     
     private void createScoreBoard(){
         

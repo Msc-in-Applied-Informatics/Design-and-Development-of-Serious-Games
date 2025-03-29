@@ -31,6 +31,30 @@ public class Totem extends Actor
     
     public void act()
     {
-        // Add your action code here.
+        lookForActiveSouls();
+    }
+    
+    
+     public void lookForActiveSouls(){
+         World world = (InsideHome) getWorld();
+        int counter = world.getObjects(Item.class).size();
+        switch(counter){
+            case 0:
+                createSprite(9, 0,80,80);
+                break;
+            case 1:
+                createSprite(6, 2,80,80);
+                break;
+            case 2:
+                  createSprite(7, 2,80,80);
+                break;                
+            case 3:
+                  createSprite(8, 2,80,80);
+                break;
+            case 4:
+                  createSprite(7, 1,80,80);
+                break;
+            default: break;
+        }
     }
 }

@@ -9,4 +9,6 @@ comment3.params=col\ row\ scaleX\ scaleY
 comment3.target=void\ createSprite(int,\ int,\ int,\ int)
 comment4.params=
 comment4.target=void\ act()
-numComments=5
+comment5.params=
+comment5.target=void\ lookForActiveSouls()
+numComments=6
