@@ -36,7 +36,7 @@ public class Totem extends Actor
     
     
      public void lookForActiveSouls(){
-         World world = (InsideHome) getWorld();
+        World world = (InsideHome) getWorld();
         int counter = world.getObjects(Item.class).size();
         switch(counter){
             case 0:

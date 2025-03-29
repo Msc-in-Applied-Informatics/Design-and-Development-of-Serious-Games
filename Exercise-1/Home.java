@@ -23,9 +23,9 @@ public class Home extends Tile
     public void act()
     {  
         if(getY() >getWorld().getHeight() /2)
-            getWorld().setPaintOrder(Weather.class,Door.class,Paralize.class,Player.class,Animal.class,Home.class,Fountain.class,Animation.class,Item.class, Tile.class);
+            getWorld().setPaintOrder(Weather.class,Animation.class,Door.class,Paralize.class,Player.class,Animal.class,Home.class,Fountain.class,Item.class, Tile.class);
         else
-            getWorld().setPaintOrder(Weather.class,Door.class,Home.class,Paralize.class,Player.class,Animal.class,Fountain.class,Animation.class,Item.class, Tile.class);
+            getWorld().setPaintOrder(Weather.class,Animation.class,Door.class,Home.class,Paralize.class,Player.class,Animal.class,Fountain.class,Item.class, Tile.class);
     }
     
     public void updateSprite(int col, int row){

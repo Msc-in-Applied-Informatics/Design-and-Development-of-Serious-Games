@@ -66,21 +66,22 @@ public class Player extends SmoothMover
             handleArrowKey("down", 0, SPEED);
         }else if(Greenfoot.isKeyDown("f")){
             World world = getWorld();
-            if (world instanceof World1){
+            //if (world instanceof World1){
                 if(foundSomething != null){
                     pickUpItem();
                 }
                 //world.addObject(new Animation(), getX()+10, getY()-25);
-            }
+            //}
         }else if(Greenfoot.isKeyDown("d")){
             World world = getWorld();
-             if (world instanceof InsideHome){
+             //if (world instanceof InsideHome){
                     
             
                     ArrayList<ItemData> items = Inventory.getInstance().getInventory();
                     if(items.size() > 0){
                         //world.addObject(new Animation(), getX()+10, getY()-25);
                         Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
+
                         int posX = 0;
                         int posY = 0;
                         switch(posImageY){
@@ -99,9 +100,9 @@ public class Player extends SmoothMover
                                 default:break;
                         }
                         world.addObject(item, getX()+posX, getY()+posY);
-                        Inventory.getInstance().useItem(item, getX()+posX, getY()+posY);
+                        Inventory.getInstance().setDown(item, world);
                     }
-             }
+             //}
         }else{
             updateAnimation("stay");
         }              
@@ -110,10 +111,10 @@ public class Player extends SmoothMover
     private void pickUpItem() {
         Item item = (Item) getOneIntersectingObject(Item.class);
         
-        if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
-            Inventory.getInstance().addItem(item);
+        //if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
+            Inventory.getInstance().pickUpItem(item);
             getWorld().removeObject(item);
-        }
+        //}
     }
 
     private void handleArrowKey(String k, int sX, int sY) {

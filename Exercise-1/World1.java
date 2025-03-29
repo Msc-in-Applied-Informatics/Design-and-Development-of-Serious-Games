@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Write a description of class World1 here.
@@ -184,16 +185,25 @@ public class World1 extends World implements Stats
     }
     
     private void createItems(){
-        createItemNotCollected(0, 1, 100, 30);
-        createItemNotCollected(1, 1, 700, 30);
-        createItemNotCollected(2, 1, 100, 200);
-        createItemNotCollected(3, 1, 700, 540);
+        if(!Inventory.getInstance().getItems().isEmpty() || !Inventory.getInstance().getInventory().isEmpty()){
+            for(ItemData item : Inventory.getInstance().getItems()){                
+                createItemNotCollected(item.getCol(),item.getRow(),item.getPosX(),item.getPosY(), false);
+            }
+            
+        }else{
+            createItemNotCollected(0, 1, 100, 30, true);
+            createItemNotCollected(1, 1, 700, 30, true);
+            createItemNotCollected(2, 1, 100, 200, true);
+            createItemNotCollected(3, 1, 700, 540, true);
+        }
     }
     
-    private void createItemNotCollected(int col, int row, int posX, int posY){
-        if (!Inventory.getInstance().hasItem(col, row)) {   
+    private void createItemNotCollected(int col, int row, int posX, int posY, boolean add){
+        if (!Inventory.getInstance().hasItem(col, row) && !Inventory.getInstance().foundInsideHome(col,row)) {   
             Item item = new Item(col, row);
             addObject(item, posX, posY);
+            if(add)
+                Inventory.getInstance().addItem(item);            
         }
     }
     

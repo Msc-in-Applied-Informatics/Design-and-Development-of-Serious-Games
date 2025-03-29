@@ -127,8 +127,8 @@ public class InsideHome extends World implements Stats
     }
     
     private void createItems(){
-        ArrayList<InsideItemData> items = Inventory.getInstance().getUsedItems();
-        for(InsideItemData item: items){
+        ArrayList<ItemData> items = Inventory.getInstance().getInsideItems();
+        for(ItemData item: items){
             Item obj = new Item(item.getCol(),item.getRow());
             addObject(obj,item.getPosX(),item.getPosY());   
         }
