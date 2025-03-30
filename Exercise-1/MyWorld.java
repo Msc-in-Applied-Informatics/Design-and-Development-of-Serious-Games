@@ -24,7 +24,7 @@ public class MyWorld extends World
         reset();
         displayDescription();
         Greenfoot.setWorld(new World1());
-        //Greenfoot.setWorld(new InsideHome());
+        //Greenfoot.setWorld(new InsideHome(new Player(new Life())));
         //backgroundMusic.playLoop();
     }
     

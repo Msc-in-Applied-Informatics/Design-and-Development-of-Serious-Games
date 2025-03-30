@@ -8,11 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Animation extends Actor
 {
-     GreenfootImage spriteSheet = new GreenfootImage("find-something3.png");
-        private int imageNo = 0;
-        private int IMAGE_COUNT = 4;
-        private int increment = 0;
-        
+     GreenfootImage spriteSheet = new GreenfootImage("find-something3.png");       
         private long lastFrameTime = 0;
         private int frameDelay = 500; 
  

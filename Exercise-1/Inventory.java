@@ -16,6 +16,7 @@ public class Inventory
     private ArrayList<ItemData> inventoryItems; //Inventory
     private ArrayList<ItemData> items; // start Items out
     private ArrayList<ItemData> insideItems; // inside home
+    private int useItems = 0;
 
     private Inventory() {
         inventoryItems = new ArrayList<>();
@@ -76,6 +77,8 @@ public class Inventory
             items.clear();
         if(insideItems.size() > 0)
             insideItems.clear();
+            
+        useItems = 0;
     }
     
     public void addItem(Item item){
@@ -117,5 +120,17 @@ public class Inventory
             }
         }
         return false;
+    }
+    
+    public void useItem(){
+        useItems++;
+    }
+    public int getUsedItems(){
+        return useItems;
+    }
+    
+    public void cancelUseItem(){
+        if(useItems> 0 )
+            useItems--;
     }
 }

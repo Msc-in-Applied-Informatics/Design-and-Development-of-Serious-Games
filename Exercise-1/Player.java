@@ -74,35 +74,37 @@ public class Player extends SmoothMover
             //}
         }else if(Greenfoot.isKeyDown("d")){
             World world = getWorld();
-             //if (world instanceof InsideHome){
-                    
-            
-                    ArrayList<ItemData> items = Inventory.getInstance().getInventory();
-                    if(items.size() > 0){
-                        //world.addObject(new Animation(), getX()+10, getY()-25);
-                        Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
+            ArrayList<ItemData> items = Inventory.getInstance().getInventory();
+            if(items.size() > 0){
+                //world.addObject(new Animation(), getX()+10, getY()-25);
+                Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
 
-                        int posX = 0;
-                        int posY = 0;
-                        switch(posImageY){
-                            case 0:
-                                 posY = -25;
-                                break;
-                            case 1:
-                                 posX = +30;
-                                break;
-                            case 2:
-                                posY = 20;
-                                break;
-                            case 3:
-                                posX = -30;
-                                break;
-                                default:break;
-                        }
-                        world.addObject(item, getX()+posX, getY()+posY);
-                        Inventory.getInstance().setDown(item, world);
+                int posX = 0;
+                int posY = 0;
+                switch(posImageY){
+                    case 0:
+                         posY = -25;
+                        break;
+                    case 1:
+                         posX = +30;
+                        break;
+                    case 2:
+                        posY = 20;
+                        break;
+                    case 3:
+                        posX = -30;
+                        break;
+                        default:break;
+                }
+                if (world instanceof InsideHome){
+                    if(isTouching(ItemPlace.class)){
+                          Inventory.getInstance().useItem();
                     }
-             //}
+                }
+                world.addObject(item, getX()+posX, getY()+posY);
+                Inventory.getInstance().setDown(item, world);
+                
+            }
         }else{
             updateAnimation("stay");
         }              
@@ -110,10 +112,16 @@ public class Player extends SmoothMover
     
     private void pickUpItem() {
         Item item = (Item) getOneIntersectingObject(Item.class);
-        
+        World world = getWorld();
         //if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
-            Inventory.getInstance().pickUpItem(item);
-            getWorld().removeObject(item);
+        Inventory.getInstance().pickUpItem(item);
+        getWorld().removeObject(item);
+        
+        if (world instanceof InsideHome){
+            if(isTouching(ItemPlace.class) && Inventory.getInstance().getItems().size()> 0){
+                  Inventory.getInstance().cancelUseItem();
+            }
+        }
         //}
     }
 

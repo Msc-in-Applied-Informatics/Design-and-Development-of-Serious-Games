@@ -37,7 +37,9 @@ public class Totem extends Actor
     
      public void lookForActiveSouls(){
         World world = (InsideHome) getWorld();
-        int counter = world.getObjects(Item.class).size();
+        
+        int counter = Inventory.getInstance().getUsedItems();
+        //int counter = world.getObjects(Item.class).size();
         switch(counter){
             case 0:
                 createSprite(9, 0,80,80);
