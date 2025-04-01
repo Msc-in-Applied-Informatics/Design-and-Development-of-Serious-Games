@@ -23,7 +23,7 @@ public class MyWorld extends World
         //addObject(player, getWidth()/2 + 100, getHeight()/2);
         reset();
         displayDescription();
-        Greenfoot.setWorld(new World1());
+        //Greenfoot.setWorld(new World1());
         //Greenfoot.setWorld(new InsideHome(new Player(new Life())));
         //backgroundMusic.playLoop();
     }

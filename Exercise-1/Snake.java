@@ -7,14 +7,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class Snake extends Animal
-{
-    public Snake(){
-        setSprite("animals/Monsters-no-bg.png");
-        createSprite(4,6, 30,30);
-    }
-    
+{   
     private final static int SPEEDVARIATION = 3;
     private final static int SPEEDCHANGECHANCE = 10;
+    
+    private GreenfootSound poisonSound = new GreenfootSound("Poison.wav");
     
     private int lastPos = 6;
     // X = [3,4,5] , Y = [4,5,6,7]
@@ -22,7 +19,12 @@ public class Snake extends Animal
     private int frameCounter = 0;
     
     private long lastFrameTime = 0;
-    private int frameDelay = 3000;    
+    private int frameDelay = 3000;
+    
+    public Snake(){
+        setSprite("animals/Monsters-no-bg.png");
+        createSprite(4,6, 30,30);
+    }
     
     protected void reaction() {
         if (Greenfoot.getRandomNumber(30) == 0) { 
@@ -50,6 +52,7 @@ public class Snake extends Animal
                 World1 world = (World1) getWorld();
                 world.addObject(new Paralize(), player.getX(), player.getY());
             //if(test == 1){
+                poisonSound.play();
                 player.getDamage(10);
                  //test=0;   
           //  }

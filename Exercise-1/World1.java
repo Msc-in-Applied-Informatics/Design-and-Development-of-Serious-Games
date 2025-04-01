@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public class World1 extends World implements Stats
 {
     private Console console;
+    private Counter scoreCounter;
+    private Counter scoreCounter2;
+    private Counter totalScore;
     private GreenfootSound backgroundMusic = new GreenfootSound("17 MT11 ForestTown.mid"); 
     private final static int ROW = 24;
     private final static int COL = 32;
@@ -64,12 +67,12 @@ public class World1 extends World implements Stats
             addObject(player,list.get(0).getX(), list.get(0).getY()+60);
         else
             addObject(player,getWidth()/2, getHeight()/2);
-        State.getInstance().resetState();
+        //State.getInstance().resetState();
         createAnimals();
         
         createItems();
        
-        //backgroundMusic.playLoop();
+        backgroundMusic.playLoop();
     } 
     public World1(Player player){
         super(SWIDTH,SHEIGHT,1);
@@ -155,12 +158,23 @@ public class World1 extends World implements Stats
     }
     
     private void createWeather(){
-        if (Greenfoot.getRandomNumber(10) < 9) { // 30% πιθανότητα να δημιουργηθεί σταγόνα
-            int pos =  Greenfoot.getRandomNumber(getWidth());
-            if(pos>22)
-                addObject(new Rain(),pos, END_WORLD_LEFT);
-            else{
-                addObject(new Rain(),Greenfoot.getRandomNumber(20)+22, Greenfoot.getRandomNumber(101)+END_WORLD_RIGHT);
+         int counter = Inventory.getInstance().getUsedItems();
+         if(counter > 0 && counter < 3){
+            if (Greenfoot.getRandomNumber(10) < 9) { 
+                int pos =  Greenfoot.getRandomNumber(getWidth());
+                if(pos>22)
+                    addObject(new Rain(),pos, END_WORLD_LEFT);
+                else{
+                    addObject(new Rain(),Greenfoot.getRandomNumber(20)+22, Greenfoot.getRandomNumber(101)+END_WORLD_RIGHT);
+                }
+            }
+        }else if(counter>2){            
+            if (Greenfoot.getRandomNumber(100) < 50) { 
+                int pos =  Greenfoot.getRandomNumber(getWidth());
+                if(pos>22)
+                    addObject(new Snow(),pos, END_WORLD_LEFT);
+                else
+                    addObject(new Snow(),Greenfoot.getRandomNumber(20)+22, Greenfoot.getRandomNumber(101)+END_WORLD_RIGHT);
             }
         }
     }
@@ -206,9 +220,7 @@ public class World1 extends World implements Stats
                 Inventory.getInstance().addItem(item);            
         }
     }
-    
-    public void lookForActiveSouls(){ };
-    
+        
     private void createScoreBoard(){
         
         console = new Console();
@@ -218,10 +230,40 @@ public class World1 extends World implements Stats
         addObject(life,920,50);
         PlayerImage icon = new PlayerImage();
         addObject(icon,820,50);
+        
+        addObject(new Egg(40),820, 100);
+        addObject(new X(20), 850, 100);
+        scoreCounter = new Counter();
+        addObject(scoreCounter, 910, 100);
+        
+        Item item = new Item(4,2);
+        addObject(item,822, 140);
+        addObject(new X(20), 850, 150);
+        
+        scoreCounter2 = new Counter();
+        addObject(scoreCounter2, 910, 150);
+        
+        addObject(new EqualSymbol(40),835,200);
+        totalScore = new Counter();
+        addObject(totalScore,910, 200);
     }
     
     @Override
     public void setLife(int lvl){
         counter = lvl;
+    }
+    @Override
+    public void setEggsPoints(int eggs){
+        scoreCounter.setValue(eggs);
+    }
+    @Override
+    public void setItemPoints(int items){
+        scoreCounter2.setValue(items);
+    }
+    @Override
+    public void setPoints(){
+        int eggsPoints = scoreCounter.getValue() * 3;
+        int itemPoints = scoreCounter2.getValue() * 10;
+        totalScore.setValue( eggsPoints + itemPoints);
     }
 }

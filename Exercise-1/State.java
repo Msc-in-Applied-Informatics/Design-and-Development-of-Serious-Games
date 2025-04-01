@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import greenfoot.World;
+
 /**
  * Write a description of class Saver here.
  * 
@@ -7,6 +10,8 @@
 public class State  
 {
     private static State instance;
+    private int eggs = 0;
+    private int totems = 0;
     private int savedScore = 0;
     private int savedPositionX = 0;
     private int savedPositionY = 0;
@@ -21,6 +26,17 @@ public class State
             instance = new State();
         }
         return instance;
+    }
+    
+    public void saveScore(int eggs, int totems){
+        if(eggs>0)
+            this.eggs +=eggs;
+        if(totems>0)
+            this.totems += totems;
+    }
+    
+    public int[] getScore() {
+        return new int[]{this.eggs, this.totems};
     }
 
     public void saveState(int score, int posX, int posY) {
@@ -44,6 +60,8 @@ public class State
     public void resetState() {
         waterIndex = 70;
         savedScore = 0;
+        eggs = 0;
+        totems = 0;
         savedPositionX = 0;
         savedPositionY = 0;
     }

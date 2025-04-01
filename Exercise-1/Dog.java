@@ -44,6 +44,12 @@ public class Dog extends Animal
       
     }
     
+    protected void sense(){
+        if(canSee(Egg.class)){
+            eat(Egg.class);
+        }
+    }
+    
     protected void animate(){
         frameCounter++;
 

@@ -27,11 +27,15 @@ public class Player extends SmoothMover
     private int posImageStay = 1;
     private State state;
     private Life myLife;
-    private Item foundSomething;
-    
+    private Item foundSomething;  
     private long lastFrameTime = 0;
     private int frameDelay = 100; // Καθυστέρηση 100ms  
+    private GreenfootSound soundEatFood = new GreenfootSound("Item2.wav");
+    private GreenfootSound useItemSound = new GreenfootSound("Item1.wav");
     
+    private GreenfootSound pickUpSound = new GreenfootSound("sfx-pickup.wav");
+     private GreenfootSound notHereSound = new GreenfootSound("sfx-nom.wav");
+     
     public Player(Life life){
         spriteSheet = new GreenfootImage("players/People5.png");
         updateSprite(posImageX,posImageY);
@@ -41,6 +45,7 @@ public class Player extends SmoothMover
     }
     public void act()
     {       
+            setScoreBoard();
             handleKeyPresses();
             boundedMove(); 
             lookForFood();
@@ -67,43 +72,52 @@ public class Player extends SmoothMover
         }else if(Greenfoot.isKeyDown("f")){
             World world = getWorld();
             //if (world instanceof World1){
-                if(foundSomething != null){
+                if(foundSomething != null && Inventory.getInstance().getInventory().isEmpty()){
                     pickUpItem();
                 }
                 //world.addObject(new Animation(), getX()+10, getY()-25);
             //}
         }else if(Greenfoot.isKeyDown("d")){
             World world = getWorld();
-            ArrayList<ItemData> items = Inventory.getInstance().getInventory();
-            if(items.size() > 0){
-                //world.addObject(new Animation(), getX()+10, getY()-25);
-                Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
-
-                int posX = 0;
-                int posY = 0;
-                switch(posImageY){
-                    case 0:
-                         posY = -25;
-                        break;
-                    case 1:
-                         posX = +30;
-                        break;
-                    case 2:
-                        posY = 20;
-                        break;
-                    case 3:
-                        posX = -30;
-                        break;
-                        default:break;
-                }
-                if (world instanceof InsideHome){
-                    if(isTouching(ItemPlace.class)){
-                          Inventory.getInstance().useItem();
+            
+            Item totem = (Item) getOneIntersectingObject(Item.class);
+            if( totem != null &&  !Inventory.getInstance().getInventory().isEmpty()){
+                notHereSound.play();
+                world.addObject(new Attention(), getX()+10, getY()-25);
+            }else{
+                ArrayList<ItemData> items = Inventory.getInstance().getInventory();
+                if(items.size() > 0){
+                    //world.addObject(new Animation(), getX()+10, getY()-25);
+                    Item item = new Item(items.get(0).getCol(), items.get(0).getRow());
+    
+                    int posX = 0;
+                    int posY = 0;
+                    switch(posImageY){
+                        case 0:
+                             posY = -25;
+                            break;
+                        case 1:
+                             posX = +30;
+                            break;
+                        case 2:
+                            posY = 20;
+                            break;
+                        case 3:
+                            posX = -30;
+                            break;
+                            default:break;
                     }
+                    if (world instanceof InsideHome){
+                        if(isTouching(ItemPlace.class)){
+                            Inventory.getInstance().useItem();
+                            useItemSound.play();
+                            State.getInstance().saveScore(0, 1);
+                        }
+                    }
+                    world.addObject(item, getX()+posX, getY()+posY);
+                    Inventory.getInstance().setDown(item, world);
+                    
                 }
-                world.addObject(item, getX()+posX, getY()+posY);
-                Inventory.getInstance().setDown(item, world);
-                
             }
         }else{
             updateAnimation("stay");
@@ -115,6 +129,7 @@ public class Player extends SmoothMover
         World world = getWorld();
         //if (item != null && !Inventory.getInstance().hasItem(item.getCol(), item.getRow())) {
         Inventory.getInstance().pickUpItem(item);
+        pickUpSound.play();
         getWorld().removeObject(item);
         
         if (world instanceof InsideHome){
@@ -187,10 +202,12 @@ public class Player extends SmoothMover
                     }
                     if(isTouching(Item.class)){
                         Item item = (Item) getOneObjectAtOffset(x+5- getX(),y-15 -getY() ,Item.class);
-                        if(item != null){
+                        if(item != null ){
                             World world = (World) getWorld();
-                            world.addObject(new Animation(), getX()+10, getY()-25);
-                            foundSomething = item;
+                            if(Inventory.getInstance().getInventory().isEmpty()){
+                                world.addObject(new Animation(), getX()+10, getY()-25);
+                                foundSomething = item;
+                            }
                             return false;
                         }                           
                     }
@@ -253,8 +270,21 @@ public class Player extends SmoothMover
        List<Food> foods = getWorld().getObjectsAt(getX(), getY(), Food.class);
         if (!foods.isEmpty()) 
         {
-            myLife.heal(10);
+            myLife.heal(15);
+            soundEatFood.play();
            getWorld().removeObject(foods.get(0));
+        }
+        
+        if(isTouching(Egg.class)){
+            Actor actor = getOneObjectAtOffset(0, 0, Egg.class);
+            if(actor!= null){
+                getWorld().removeObject(actor);
+                 
+                World world = getWorld();
+                if(world instanceof Stats){                    
+                    State.getInstance().saveScore(1, 0);
+                }
+            }
         }
     }
     
@@ -271,5 +301,15 @@ public class Player extends SmoothMover
     
     public boolean hasInInventory(int col, int row){
         return Inventory.getInstance().hasItem(col,row);
+    }
+    
+    public void setScoreBoard(){
+        World world = getWorld();
+            if(world instanceof Stats){
+                Stats board = (Stats) world;
+                board.setEggsPoints(State.getInstance().getScore()[0]);
+                board.setItemPoints(State.getInstance().getScore()[1]);
+                board.setPoints();
+            }
     }
 }

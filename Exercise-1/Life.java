@@ -14,6 +14,7 @@ public class Life extends Actor
     private GreenfootImage currentImage;
     private GreenfootImage player;
     private boolean heal = false;
+    private double time = 2;
     
     public Life(){
         for(int i = 0 ; i <71;i++){
@@ -26,8 +27,11 @@ public class Life extends Actor
 
     public void act()
     {
+       setHardMode();
+        
+        
        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastUpdateTime  >= 1000 ) {
+        if (currentTime - lastUpdateTime  >= time*1000 ) {
             if(heal && index < 70 )
                 index++;
             else if(index>0)
@@ -37,6 +41,18 @@ public class Life extends Actor
             updateDisplay(index);
         }
         
+    }
+    
+    private void setHardMode(){
+        int counter = Inventory.getInstance().getInsideItems().size();
+        if(counter == 0)
+            time = 2;
+        else if(counter == 1)
+            time = 1.5;
+        else if(counter == 2)
+            time = 1;
+        else if (counter == 3)
+            time = 0.9;
     }
     
      private void updateDisplay(int pos) {

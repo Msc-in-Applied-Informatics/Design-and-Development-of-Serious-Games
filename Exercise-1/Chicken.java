@@ -8,6 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Chicken extends Animal
 {
+    private long  lastUpdateTime = 0;
+    private int time = 5;
     public Chicken(){
         setSprite("animals/Animal-no-bg.png");
         createSprite(6,2, 50,50);
@@ -40,6 +42,23 @@ public class Chicken extends Animal
             }
         }
       
+    }
+    
+    protected void sense(){
+        createEgg();  
+        
+    }
+    
+    private void createEgg() {
+        long currentTime = System.currentTimeMillis();
+    
+        if (currentTime - lastUpdateTime >= time * 1000) { 
+            if (Greenfoot.getRandomNumber(10) < 5) { 
+                Egg egg = new Egg(20);
+                getWorld().addObject(egg, getX(), getY());
+            }
+            lastUpdateTime = currentTime; 
+        }
     }
     
     protected void animate(){

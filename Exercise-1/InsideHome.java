@@ -11,6 +11,9 @@ import java.util.ArrayList;
 public class InsideHome extends World implements Stats
 {
     private Console console;
+    private Counter scoreCounter;
+    private Counter scoreCounter2;
+    private Counter totalScore;
     Life mylife;
     private int counter;
     private final static int ROW = 24;
@@ -56,23 +59,15 @@ public class InsideHome extends World implements Stats
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SWIDTH, SHEIGHT, 1); 
         createMap();       
-        setPaintOrder(Totem.class,Animation.class, Item.class,Player.class,Home.class,Food.class,Tile.class);
+        setPaintOrder(Totem.class,Animation.class,Attention.class, Item.class,Player.class,Home.class,Food.class,Tile.class);
         List<Door> list = this.getObjects(Door.class);
         if(!list.isEmpty())
             addObject(player,list.get(0).getX(), list.get(0).getY()+60);
         //addObject(player,getWidth()/2, getHeight()/2);
         createScoreBoard(player);
         //State.getInstance().resetState();
-        Food food1 = new Food(3,6);
-        addObject(food1,700,200);
-        Food food2 = new Food(3,6);
-        addObject(food2,700,400);
-        Food food3 = new Food(3,6);
-        addObject(food3,100,400);
-        Food food4 = new Food(3,6);
-        addObject(food4,100,200);
         
-           
+        createFood();      
        
         player.setLife();
         
@@ -127,7 +122,47 @@ public class InsideHome extends World implements Stats
         //mylife.autoHeal();
         addObject(mylife,920,50);
         PlayerImage icon = new PlayerImage();
-        addObject(icon,820,50);        
+        addObject(icon,820,50); 
+        
+        addObject(new Egg(40),820, 100);
+        addObject(new X(20), 850, 100);
+        scoreCounter = new Counter();
+        addObject(scoreCounter, 910, 100);
+        
+        Item item = new Item(4,2);
+        addObject(item,822, 140);
+        addObject(new X(20), 850, 150);
+        
+        scoreCounter2 = new Counter();
+        addObject(scoreCounter2, 910, 150);
+        
+        addObject(new EqualSymbol(40),835,200);
+        totalScore = new Counter();
+        addObject(totalScore,910, 200);
+    }
+    
+    private void createFood(){
+       int counter = Inventory.getInstance().getInsideItems().size();
+        Food food1 = new Food(3,6);       
+        Food food2 = new Food(3,6);       
+        Food food3 = new Food(3,6);       
+        Food food4 = new Food(3,6);
+       
+       if(counter == 0){
+           addObject(food1,700,200);
+           addObject(food2,700,400);
+           addObject(food3,100,400);
+           addObject(food4,100,200);
+       }else if(counter == 1){
+           addObject(food1,700,200);
+           addObject(food2,700,400);
+           addObject(food3,100,400);
+       }else if (counter == 2){
+            addObject(food1,700,200);
+            addObject(food3,100,400);
+       }else {
+           addObject(food1,700,200);
+       }
     }
     
     private void createItems(){
@@ -146,5 +181,19 @@ public class InsideHome extends World implements Stats
     @Override
     public void setLife(int lvl){
         counter = lvl;
+    }
+    @Override
+    public void setEggsPoints(int eggs){
+        scoreCounter.setValue(eggs);
+    }
+    @Override
+    public void setItemPoints(int items){
+        scoreCounter2.setValue(items);
+    }
+    @Override
+    public void setPoints(){
+        int eggsPoints = scoreCounter.getValue() * 3;
+        int itemPoints = scoreCounter2.getValue() * 10;
+        totalScore.setValue( eggsPoints + itemPoints);
     }
 }

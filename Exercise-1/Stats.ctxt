@@ -2,4 +2,10 @@
 comment0.target=Stats
 comment1.params=lvl
 comment1.target=void\ setLife(int)
-numComments=2
+comment2.params=eggs
+comment2.target=void\ setEggsPoints(int)
+comment3.params=items
+comment3.target=void\ setItemPoints(int)
+comment4.params=
+comment4.target=void\ setPoints()
+numComments=5

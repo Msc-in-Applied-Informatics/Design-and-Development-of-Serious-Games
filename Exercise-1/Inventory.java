@@ -71,11 +71,11 @@ public class Inventory
     }
     //Clear History all
     public void clearInventory() {
-        if(inventoryItems.size() >0)
+        //if(inventoryItems.size() >0)
             inventoryItems.clear();
-        if(items.size() > 0)
+        //if(items.size() > 0)
             items.clear();
-        if(insideItems.size() > 0)
+        //if(insideItems.size() > 0)
             insideItems.clear();
             
         useItems = 0;
