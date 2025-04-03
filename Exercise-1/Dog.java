@@ -8,20 +8,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Dog extends Animal
 {
-  
+    private final static int SPEEDVARIATION = 3;
+    private final static int SPEEDCHANGECHANCE = 10;
+    
+    private int lastPos = 1;
+    
+    private int animationIndex = 1;
+    private int frameCounter = 0;
+     private GreenfootSound dogSound = new GreenfootSound("Dog.wav"); 
 
     public Dog(){
         setSprite("animals/Animal-no-bg.png");
         createSprite(1,2, 50,50);
     }
-    
-        private final static int SPEEDVARIATION = 3;
-        private final static int SPEEDCHANGECHANCE = 10;
-        
-        private int lastPos = 1;
-        
-        private int animationIndex = 1;
-        private int frameCounter = 0;
         
     
     protected void reaction() {
@@ -47,6 +46,9 @@ public class Dog extends Animal
     protected void sense(){
         if(canSee(Egg.class)){
             eat(Egg.class);
+        }
+        if(canSee(Player.class) && State.getInstance().gamePlaying()){
+            dogSound.play();
         }
     }
     

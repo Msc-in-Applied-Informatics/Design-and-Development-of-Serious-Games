@@ -25,6 +25,7 @@ public class Player extends SmoothMover
     private int posImageX = 1;
     private int posImageY = 2;
     private int posImageStay = 1;
+    private boolean play = true;
     private State state;
     private Life myLife;
     private Item foundSomething;  
@@ -34,25 +35,34 @@ public class Player extends SmoothMover
     private GreenfootSound useItemSound = new GreenfootSound("Item1.wav");
     
     private GreenfootSound pickUpSound = new GreenfootSound("sfx-pickup.wav");
-     private GreenfootSound notHereSound = new GreenfootSound("sfx-nom.wav");
+    private GreenfootSound pickUpEgg = new GreenfootSound("pick-egg.wav");
+    private GreenfootSound notHereSound = new GreenfootSound("sfx-nom.wav");
      
+    private GreenfootSound openDoor1 = new GreenfootSound("Open1.wav"); 
+    private GreenfootSound openDoor2 = new GreenfootSound("Open2.wav");  
+    
+    private GreenfootSound backgroundMusic = new GreenfootSound("17 MT11 ForestTown.mid"); 
+    private GreenfootSound backgroundMusicHome = new GreenfootSound("Castle.mid"); 
+    
     public Player(Life life){
         spriteSheet = new GreenfootImage("players/People5.png");
         updateSprite(posImageX,posImageY);
         myLife = life;
         setLife();
+        backgroundMusic.playLoop();
         //state.getInstance().saveWater(life.getLife());
     }
     public void act()
     {       
-            setScoreBoard();
-            handleKeyPresses();
-            boundedMove(); 
-            lookForFood();
+            if(checkStateGame()){
+                setScoreBoard();
+                handleKeyPresses();
+                boundedMove(); 
+                lookForFood();
+            }
     }
     
-   
-    
+       
     private void handleKeyPresses() {
         Tile tile = (Tile) getOneObjectAtOffset(5,5,Tile.class);
         if( tile != null && tile.getType() == 41){
@@ -172,14 +182,20 @@ public class Player extends SmoothMover
                     return false;
                 case 4:
                     if(isAtHouseDoor(tile,x,y)){   
+                       backgroundMusicHome.playLoop();
+                       backgroundMusic.stop();
                        state.getInstance().saveWater(myLife.getLife());
+                        openDoor2.play();
                        Greenfoot.setWorld(new InsideHome(this));
+                     
+                       
                     }
                    return false;
                 case 5: 
                     //Greenfoot.setWorld(new World1());
                     World currentWorld = getWorld();
                     tile.setImage("tiles/door-open", ".gif");
+                     openDoor1.play();
                     if(currentWorld.getClass() == World1.class)
                         tile.setType(7);
                     else if( currentWorld.getClass() == InsideHome.class)
@@ -188,7 +204,10 @@ public class Player extends SmoothMover
                 case 6:
                     state.getInstance().saveWater(myLife.getLife());
                     //tile.setType(5);
+                    backgroundMusicHome.stop();
                     Greenfoot.setWorld(new World1());
+                    
+                    //backgroundMusic.playLoop();
                     return true;
                 case 7:
                     Greenfoot.setWorld(new InsideHome(this));
@@ -266,23 +285,25 @@ public class Player extends SmoothMover
     }
     
     private void lookForFood(){
-        
-       List<Food> foods = getWorld().getObjectsAt(getX(), getY(), Food.class);
-        if (!foods.isEmpty()) 
-        {
-            myLife.heal(15);
-            soundEatFood.play();
-           getWorld().removeObject(foods.get(0));
-        }
-        
-        if(isTouching(Egg.class)){
-            Actor actor = getOneObjectAtOffset(0, 0, Egg.class);
-            if(actor!= null){
-                getWorld().removeObject(actor);
-                 
-                World world = getWorld();
-                if(world instanceof Stats){                    
-                    State.getInstance().saveScore(1, 0);
+       if(getLife().getLife() > 0){ 
+           List<Food> foods = getWorld().getObjectsAt(getX(), getY(), Food.class);
+            if (!foods.isEmpty()) 
+            {
+                myLife.heal(15);
+                soundEatFood.play();
+               getWorld().removeObject(foods.get(0));
+            }
+            
+            if(isTouching(Egg.class)){
+                Actor actor = getOneObjectAtOffset(0, 0, Egg.class);
+                if(actor!= null){
+                    pickUpEgg.play();
+                    getWorld().removeObject(actor);
+                     
+                    World world = getWorld();
+                    if(world instanceof Stats){                    
+                        State.getInstance().saveScore(1, 0);
+                    }
                 }
             }
         }
@@ -311,5 +332,27 @@ public class Player extends SmoothMover
                 board.setItemPoints(State.getInstance().getScore()[1]);
                 board.setPoints();
             }
+    }
+    
+    private boolean checkStateGame(){
+        if(myLife.getLife() == 0  ){            
+            
+               
+            if(State.getInstance().gamePlaying()){
+                State.getInstance().stopGame();
+                State.getInstance().saveWater(0);
+                getWorld().addObject(new Announce("LOSS"), getWorld().getWidth()/2 -100, getWorld().getHeight()/2);
+            }
+        }
+        if(!State.getInstance().gamePlaying()){
+            if(backgroundMusic.isPlaying()){
+                backgroundMusic.stop();               
+            }
+            
+            if(backgroundMusicHome.isPlaying()){
+                backgroundMusicHome.stop();
+            }
+        }
+        return State.getInstance().gamePlaying();
     }
 }

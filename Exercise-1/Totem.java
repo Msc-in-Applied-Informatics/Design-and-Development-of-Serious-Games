@@ -48,15 +48,23 @@ public class Totem extends Actor
                 createSprite(6, 2,80,80);
                 break;
             case 2:
-                  createSprite(7, 2,80,80);
+                createSprite(7, 2,80,80);
                 break;                
             case 3:
-                  createSprite(8, 2,80,80);
+                createSprite(8, 2,80,80);
                 break;
             case 4:
-                  createSprite(7, 1,80,80);
+                createSprite(7, 1,80,80);
+                victory();
                 break;
             default: break;
+        }
+    }
+    
+    private void victory(){
+        if(State.getInstance().gamePlaying()){
+            State.getInstance().stopGame();
+            getWorld().addObject(new Announce("WIN"), getWorld().getWidth()/2 -100, getWorld().getHeight()/2);
         }
     }
 }

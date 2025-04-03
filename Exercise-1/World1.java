@@ -59,7 +59,7 @@ public class World1 extends World implements Stats
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SWIDTH, SHEIGHT, 1); 
         createMap();       
-        setPaintOrder(Weather.class,Paralize.class,Player.class,Animal.class,Door.class,Home.class,Fountain.class,Animation.class,Item.class,Tile.class);
+        setPaintOrder(Announce.class,Weather.class,Paralize.class,Player.class,Animal.class,Door.class,Home.class,Fountain.class,Animation.class,Item.class,Tile.class);
         createScoreBoard();
         Player player = new Player(life);
         List<Home> list = this.getObjects(Home.class);
@@ -71,8 +71,9 @@ public class World1 extends World implements Stats
         createAnimals();
         
         createItems();
-       
-        backgroundMusic.playLoop();
+        //addObject(new Announce("WIN"), getWidth()/2 -100, getHeight()/2);
+        
+        
     } 
     public World1(Player player){
         super(SWIDTH,SHEIGHT,1);
@@ -182,6 +183,11 @@ public class World1 extends World implements Stats
     private void createAnimals(){
         Dog dog = new Dog();        
         addObject(dog,getWidth()/2, getHeight()/2);
+        Dog dog1 = new Dog();        
+        addObject(dog1,getWidth()/5, getHeight()/2);
+        Dog dog2 = new Dog();        
+        addObject(dog2,getWidth()/5, getHeight()/4);
+        
         Chicken chicken = new Chicken();
         addObject(chicken,getWidth()/3, getHeight()/3);
         Chicken chicken2 = new Chicken();
@@ -196,6 +202,14 @@ public class World1 extends World implements Stats
         addObject(snake4, 320,280);
               Snake snake5 = new Snake();
         addObject(snake5, 400,80);
+        
+        int counter = Inventory.getInstance().getInsideItems().size();
+        if(counter>1){
+            Snake snake6 = new Snake();
+            addObject(snake6, 700,100);
+            Snake snake7 = new Snake();
+            addObject(snake7, 700,300);
+        }
     }
     
     private void createItems(){

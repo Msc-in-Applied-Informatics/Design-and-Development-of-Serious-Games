@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class Life here.
@@ -15,7 +16,8 @@ public class Life extends Actor
     private GreenfootImage player;
     private boolean heal = false;
     private double time = 2;
-    
+    private GreenfootSound sound = new GreenfootSound("Bell.wav"); 
+    private boolean stopGame = false;
     public Life(){
         for(int i = 0 ; i <71;i++){
             image[i] = new GreenfootImage("/water/full/WaterMeter2_"+ i +".png");
@@ -31,15 +33,19 @@ public class Life extends Actor
         
         
        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastUpdateTime  >= time*1000 ) {
+        List<Announce> thereIs = getWorld().getObjects(Announce.class);
+        if (currentTime - lastUpdateTime  >= time*1000 && thereIs.isEmpty()) {
             if(heal && index < 70 )
                 index++;
             else if(index>0)
                 index--;
-                
+            if(index < 40){
+                sound.play();
+            }
             lastUpdateTime = currentTime;
             updateDisplay(index);
         }
+        
         
     }
     

@@ -10,19 +10,21 @@ public class Chicken extends Animal
 {
     private long  lastUpdateTime = 0;
     private int time = 5;
+
+    private final static int SPEEDVARIATION = 3;
+    private final static int SPEEDCHANGECHANCE = 10;
+    
+    private int lastPos = 1;
+    
+    private int animationIndex = 7;
+    private int frameCounter = 0;
+    
+    private GreenfootSound chickenSound = new GreenfootSound("Chicken.wav"); 
+    
     public Chicken(){
         setSprite("animals/Animal-no-bg.png");
         createSprite(6,2, 50,50);
-    }
-    
-        private final static int SPEEDVARIATION = 3;
-        private final static int SPEEDCHANGECHANCE = 10;
-        
-        private int lastPos = 1;
-        
-        private int animationIndex = 7;
-        private int frameCounter = 0;
-        
+    }        
     
     protected void reaction() {
         if (Greenfoot.getRandomNumber(30) == 0) { 
@@ -45,8 +47,15 @@ public class Chicken extends Animal
     }
     
     protected void sense(){
-        createEgg();  
+        createEgg();
+        lookForSomeone();
         
+    }
+    
+    private void lookForSomeone(){
+        if(isTouching(Player.class) && State.getInstance().gamePlaying()){
+            chickenSound.play();
+        }
     }
     
     private void createEgg() {

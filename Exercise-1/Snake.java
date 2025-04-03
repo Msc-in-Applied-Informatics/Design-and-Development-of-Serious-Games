@@ -46,7 +46,7 @@ public class Snake extends Animal
     }
     private int test = 1;
     protected void seeSomething(){
-        if(canSee(Player.class)){
+        if(canSee(Player.class) && State.getInstance().gamePlaying()){
             if (System.currentTimeMillis() - lastFrameTime > frameDelay){
                 Player player = (Player) getOneObjectAtOffset(0, 0, Player.class);
                 World1 world = (World1) getWorld();

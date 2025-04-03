@@ -16,6 +16,7 @@ public class State
     private int savedPositionX = 0;
     private int savedPositionY = 0;
     private int waterIndex = 70;
+    private boolean play = true;
 
     private State() {
         // Ιδιωτικός constructor για Singleton pattern
@@ -71,5 +72,13 @@ public class State
     }
     public int getWater(){
         return waterIndex;
+    }
+    
+    public void stopGame(){
+        this.play = false;
+    }
+
+    public boolean gamePlaying(){
+        return play;
     }
 }
