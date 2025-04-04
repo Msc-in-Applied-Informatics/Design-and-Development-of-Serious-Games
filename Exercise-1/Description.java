@@ -28,7 +28,8 @@ public class Description extends Actor
             + "2) Item: +10 points, "
             + "3) Extra points depending on remaining life at the end.\n"
             + "Play smart, watch out for the snakes, and start your adventure now!\n"
-            + "Press ENTER to begin...");
+            + "Press ENTER to begin..."
+            + "\n** Press 'F' to pick up, and 'D' to place the item from your inventory.");
     }
     
      private void makeImage(String title, String prefix)
