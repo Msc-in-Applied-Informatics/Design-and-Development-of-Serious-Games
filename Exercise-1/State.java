@@ -65,6 +65,7 @@ public class State
         totems = 0;
         savedPositionX = 0;
         savedPositionY = 0;
+        this.play = true;
     }
     
     public void saveWater(int pos){
