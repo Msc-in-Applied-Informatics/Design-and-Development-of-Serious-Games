@@ -14,27 +14,22 @@ public class Description extends Actor
     public static final int HEIGHT = 380;
     
     public Description(){
-             makeImage("Περιγραφή", 
-    "Το Yonko Game είναι ένα συναρπαστικό παιχνίδι στρατηγικής και"
-    +"περιπέτειας, όπου στόχος \nσου είναι να συλλέξεις αντικείμενα και να τα"
-    +"τοποθετήσεις σωστά μέσα στο σπίτι, για να \nφορτίσεις το Totem σου με "
-    +"ενέργεια και να νικήσεις!\n"
-    +"Μπορείς να μεταφέρεις μόνο 1 αντικείμενο κάθε φορά. Πρόσεχε έξω,"
-    +" καθώς κυκλοφορούν \nδηλητηριώδη φίδια που μειώνουν τη ζωή σου (Water)."
-    +"\nΗ ζωή σου μείωνετε καθώς περνάει ο χρόνος ανάλογα με τα αντικείμενα που έχεις συλλέξει"
-    +"\nΘα συναντήσεις κοτούλες που γεννούν \nαυγά. Μπορείς να τα φας για έξτρα "
-    +"πόντους, αλλά πρόσεχε γιατί τα αγαπούν και τα σκυλάκια!\n"
-    +"Μέσα στο σπίτι θα βρεις food που σου δίνει ζωή, αλλά όσο φέρνεις "
-    +"αντικείμενα, αυτό μειώνεται.\nΑν η ζωή σου φτάσει στο μηδέν, χάνεις.\n"
-    +"ΝΙΚΑΣ αν τοποθετήσεις όλα τα αντικείμενα πριν χάσεις όλη τη ζωή σου.\n"
-
-    +"Πόντοι:\n"
-    +"1) Αυγό: +3 πόντοι, "
-    +"2) Αντικείμενο: +10 πόντοι, "
-    +"3) Extra πόντοι ανάλογα με τη ζωή στο τέλος\n"
-    +"Παίξε έξυπνα, πρόσεχε τα φίδια και ξεκίνα την περιπέτεια τώρα!\n"
-    +"Πάτησε ENTER για να ξεκινήσεις...");
-}
+        makeImage("Description", 
+            "YONKO GAME is an exciting strategy and adventure game where your goal is to collect items \n and place them correctly inside the house to charge your Totem with energy and win!\n"
+            + "You can carry only 1 item at a time. Be careful outside, as there are poisonous snakes that \nreduce your life (Water).\n"
+            + "Your life decreases over time, depending on the items you have collected.\n"
+            + "You will encounter chickens that lay eggs. You can eat them for extra points, but be careful \nbecause the dogs love them too!"
+            + " Inside the house, you will find food that restores your life, \nbut as you bring in items, it decreases.\n"
+            + "If your life reaches zero, you lose.\n"
+            + "YOU WIN if you place all items inside the house before losing all your life.\n"
+        
+            + "Points:\n"
+            + "1) Egg: +3 points, "
+            + "2) Item: +10 points, "
+            + "3) Extra points depending on remaining life at the end.\n"
+            + "Play smart, watch out for the snakes, and start your adventure now!\n"
+            + "Press ENTER to begin...");
+    }
     
      private void makeImage(String title, String prefix)
     {
